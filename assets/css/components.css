@@ -1,0 +1,1760 @@
+/**
+ * =================================================================================
+ * FILE: assets/css/components.css
+ * FILE VERSION: 2.0.1-initial
+ * APP VERSION: 2.0.1
+ * DATE: 2026-06-12
+ * @author: gk
+ *
+ * CHANGELOG:
+ *
+ * =================================================================================
+ */
+
+/* ============================================== */
+/* 1. ANIMASI KEYFRAMES                           */
+/* ============================================== */
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes blink-faster {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes blink-fast {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes blink-medium {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+@keyframes blink-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Tambahan animasi blink untuk halaman Tracking */
+@keyframes blink-500ms {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+@keyframes blink-1000ms {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+@keyframes blink-2000ms {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+@keyframes blink-4000ms {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+.blink-500ms  { animation: blink-500ms 0.5s infinite; }
+.blink-1000ms { animation: blink-1000ms 1s infinite; }
+.blink-2000ms { animation: blink-2000ms 2s infinite; }
+.blink-4000ms { animation: blink-4000ms 4s infinite; }
+
+.blink-faster { animation: blink-faster 0.3s infinite; }
+.blink-fast { animation: blink-fast 0.5s infinite; }
+.blink-medium { animation: blink-medium 0.8s infinite; }
+.blink-slow { animation: blink-slow 1.2s infinite; }
+
+/* Toast: muncul dari center bottom (hanya animasi vertikal) */
+@keyframes toastIn {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes popupIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes drawerIn {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes drawerOut {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+@keyframes overlayFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes overlayFadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ============================================== */
+/* 2. LOADING OVERLAY GLOBAL                       */
+/* ============================================== */
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9997;
+    transition: opacity var(--transition-fast);
+}
+
+.loading-overlay.hidden {
+    display: none;
+}
+
+#loading-screen.loading-fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#loading-progress-bar.error {
+    background-color: var(--danger);
+}
+
+#loading-text.loading-text-error {
+    color: var(--danger);
+}
+
+/* ============================================== */
+/* 3. KOMPONEN DASAR - BUTTON                      */
+/* ============================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-family);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background-color: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 44px;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn:disabled,
+.btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+[data-theme="dark"] .btn:disabled,
+[data-theme="dark"] .btn.disabled {
+    opacity: 0.7;
+    background-color: var(--bg-muted);
+    border-color: transparent;
+}
+
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading .spinner {
+    margin-right: var(--space-xs);
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--text-xs);
+    min-height: 32px;
+}
+
+.btn-lg {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-base);
+    min-height: 44px;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-primary:active {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+.btn-danger:active {
+    background-color: var(--danger-dark);
+    border-color: var(--danger-dark);
+}
+
+.btn-success {
+    background-color: var(--success);
+    color: white;
+    border-color: var(--success);
+}
+
+.btn-success:active {
+    background-color: var(--success-dark);
+    border-color: var(--success-dark);
+}
+
+.btn-outline {
+    background-color: var(--bg-muted);
+    border-color: var(--border-dark);
+    color: var(--text-primary);
+}
+
+.btn-outline:active {
+    background-color: var(--bg-muted-hover);
+    border-color: var(--border-dark);
+}
+
+.btn-block {
+    width: 100%;
+    display: flex;
+}
+
+.btn-icon {
+    padding: var(--space-sm);
+    border-radius: var(--radius-full);
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.btn-icon.btn-sm {
+    padding: var(--space-xs);
+}
+
+[data-theme="dark"] .btn-outline {
+    background-color: var(--bg-muted);
+    border-color: var(--border);
+}
+
+/* ============================================== */
+/* 4. KOMPONEN DASAR - INPUT                       */
+/* ============================================== */
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* label di kiri, container input di kanan */
+    gap: var(--space-sm);
+    padding: 0;
+    margin-bottom: var(--space-sm);
+}
+
+.input-wrapper:last-child {
+    margin-bottom: 0;
+}
+
+.input-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    line-height: 1.4;
+    color: var(--text-secondary);
+    padding: var(--space-xs) 0;
+    white-space: nowrap;
+    flex-shrink: 0; /* label tidak mengecil */
+}
+
+/* Semua container input (termasuk select) memiliki lebar yang SAMA dan merapat ke kanan */
+.input-field-container {
+    width: 200px;           /* lebar tetap seragam, sesuaikan kebutuhan */
+    flex-shrink: 0;         /* jangan mengecil */
+    /* atau gunakan min-width + max-width */
+    min-width: 160px;
+    max-width: 240px;
+}
+
+/* Pastikan input dan select memenuhi container */
+.input-field,
+.input-select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: 12px;
+    font-weight: var(--font-bold);
+    color: var(--primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.input-info:active {
+    opacity: 0.7;
+}
+
+.input-info-danger {
+    color: var(--danger);
+}
+
+.input-field-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition-fast);
+    overflow: hidden;
+    min-height: 44px;
+}
+
+.input-field-container:focus-within {
+    border-color: var(--primary);
+    border-width: 1px;
+}
+
+.input-field-container.input-error {
+    border-color: var(--danger);
+}
+
+.input-field {
+    flex: 1;
+    padding: var(--space-sm);
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-align: right;
+    min-width: 0;
+    -moz-appearance: textfield;
+}
+
+.input-field::-webkit-outer-spin-button,
+.input-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-field::placeholder {
+    text-align: right;
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.input-field:disabled {
+    opacity: 0.5;
+    background-color: var(--bg-muted);
+    cursor: not-allowed;
+}
+
+.input-unit {
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) 0;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.input-dual {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.input-dual .input-field-container {
+    flex: 1;
+}
+
+.input-select {
+    flex: 1;
+    padding: var(--space-sm);
+    padding-right: calc(var(--space-sm) + 20px);
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    font-weight: var(--font-normal);
+    line-height: var(--leading-normal);
+    color: var(--text-primary);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-align: right;
+    text-align-last: right;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-sm) center;
+    background-size: 14px;
+    opacity: 0.7;
+}
+
+.input-field:disabled,
+.input-select:disabled {
+    opacity: 0.5;
+    background-color: var(--bg-muted) !important;
+    cursor: not-allowed;
+    border-color: var(--border-light);
+}
+
+.input-field-container.disabled {
+    opacity: 0.7;
+    background-color: var(--bg-muted);
+}
+
+[data-theme="dark"] .input-select {
+    opacity: 0.9;
+}
+
+/* ============================================== */
+/* 5. KOMPONEN DASAR - CARD                        */
+/* ============================================== */
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-md);
+    margin-bottom: var(--space-sm);
+    box-shadow: var(--shadow-xs);
+}
+
+.card-compact {
+    padding: var(--space-sm);
+}
+
+.card-highlight {
+    border-color: var(--primary);
+    border-width: 1px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-sm);
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.card-action {
+    color: var(--primary);
+    font-size: var(--text-xs);
+    cursor: pointer;
+}
+
+.card-content {
+    margin-bottom: var(--space-sm);
+}
+
+.card-footer {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border);
+}
+
+/* ============================================== */
+/* 6. SPACER & DIVIDER                            */
+/* ============================================== */
+
+.spacer {
+    height: var(--space-md);
+    width: 100%;
+}
+
+.spacer-sm {
+    height: var(--space-sm);
+}
+
+.spacer-lg {
+    height: var(--space-lg);
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--border);
+    margin: var(--space-md) 0;
+}
+
+.divider-light {
+    background-color: var(--border-light);
+}
+
+/* ============================================== */
+/* 7. KOMPONEN DASAR - BADGE                       */
+/* ============================================== */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xxs);
+    padding: var(--space-xxs) var(--space-xs);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    line-height: 1.4;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+}
+
+.badge-success {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--success-dark);
+}
+
+[data-theme="dark"] .badge-success {
+    background-color: rgba(16, 185, 129, 0.25);
+    color: var(--success-light);
+}
+
+.badge-danger {
+    background-color: rgba(220, 38, 38, 0.15);
+    color: var(--danger-dark);
+}
+
+[data-theme="dark"] .badge-danger {
+    background-color: rgba(239, 68, 68, 0.25);
+    color: var(--danger-light);
+}
+
+.badge-warning {
+    background-color: rgba(217, 119, 6, 0.15);
+    color: var(--warning-dark);
+}
+
+[data-theme="dark"] .badge-warning {
+    background-color: rgba(245, 158, 11, 0.25);
+    color: var(--warning-light);
+}
+
+.badge-info {
+    background-color: rgba(6, 182, 212, 0.15);
+    color: var(--info-dark);
+}
+
+[data-theme="dark"] .badge-info {
+    background-color: rgba(6, 182, 212, 0.25);
+    color: var(--info-light);
+}
+
+.badge-icon-danger,
+.badge-icon-warning {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    line-height: 1;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0;
+}
+
+.badge-icon-danger {
+    color: var(--danger);
+}
+
+.badge-icon-warning {
+    color: var(--warning);
+}
+
+[data-theme="dark"] .badge-icon-danger {
+    color: var(--danger-light);
+}
+
+[data-theme="dark"] .badge-icon-warning {
+    color: var(--warning-light);
+}
+
+/* ============================================== */
+/* 8. KOMPONEN GLOBAL - TOAST (TENGAH BAWAH)      */
+/* ============================================== */
+
+.toast-container {
+    position: fixed;
+    bottom: calc(48px + env(safe-area-inset-bottom) + var(--space-md));
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    z-index: var(--z-toast);
+    pointer-events: none;
+    width: auto;
+    max-width: 90%;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    animation: toastIn 0.3s ease-out;
+    pointer-events: auto;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    width: auto;
+    min-width: 200px;
+    text-align: center;
+    color: white;
+}
+
+.toast.hide {
+    animation: toastOut 0.2s ease-in forwards;
+}
+
+.toast-icon {
+    font-size: var(--text-base);
+    flex-shrink: 0;
+    color: white;
+}
+
+.toast-content {
+    flex: 1;
+    text-align: center;
+    color: white;
+}
+
+/* Warna background sesuai tipe */
+.toast-success { background-color: var(--success); }
+.toast-error { background-color: var(--danger); }
+.toast-warning { background-color: var(--warning); }
+.toast-info { background-color: var(--info); }
+
+/* ============================================== */
+/* 9. KOMPONEN GLOBAL - POPUP                      */
+/* ============================================== */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-popup);
+    animation: overlayFadeIn 0.2s ease-out;
+}
+
+.popup-overlay.hide {
+    animation: overlayFadeOut 0.2s ease-in forwards;
+}
+
+.popup-container {
+    width: 90%;
+    max-width: 360px;
+    max-height: 80vh;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: popupIn 0.2s ease-out;
+}
+
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.popup-title {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.popup-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.popup-close:active {
+    background-color: var(--bg-muted);
+    color: var(--text-primary);
+}
+
+.popup-content {
+    padding: var(--space-md);
+    overflow-y: auto;
+    flex: 1;
+    font-size: var(--text-sm);
+}
+
+.popup-footer {
+    display: flex;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-top: 1px solid var(--border);
+}
+
+.popup-footer .btn {
+    flex: 1;
+}
+
+/* ============================================== */
+/* 10. KOMPONEN GLOBAL - DRAWER                    */
+/* ============================================== */
+
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay);
+    backdrop-filter: blur(2px);
+    z-index: var(--z-drawer);
+    animation: overlayFadeIn 0.2s ease-out;
+}
+
+.drawer-overlay.hide {
+    animation: overlayFadeOut 0.2s ease-in forwards;
+}
+
+.drawer-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    max-width: 80vw;
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    z-index: var(--z-drawer);
+    box-shadow: var(--shadow-xl);
+    animation: drawerIn 0.2s ease-out;
+}
+
+.drawer-container.hide {
+    animation: drawerOut 0.2s ease-in forwards;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--space-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-logo-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--primary);
+}
+
+.drawer-version {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xxs);
+}
+
+.drawer-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-lg);
+    color: var(--text-muted);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.drawer-close:active {
+    background-color: var(--bg-muted);
+}
+
+.drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-sm) 0;
+}
+
+.drawer-menu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    font-size: var(--text-sm);
+    min-height: 44px;
+}
+
+.drawer-menu-item:active {
+    background-color: var(--bg-muted);
+}
+
+.drawer-menu-icon {
+    font-size: var(--text-lg);
+    width: 20px;
+    text-align: center;
+}
+
+.drawer-menu-text {
+    font-weight: var(--font-medium);
+}
+
+.drawer-footer {
+    padding: var(--space-md);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drawer-theme-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-xs) 0;
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.drawer-theme-container:active {
+    opacity: 0.7;
+}
+
+.drawer-theme-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}
+
+.drawer-theme-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+/* ============================================== */
+/* 11. KOMPONEN GLOBAL - HEADER                    */
+/* ============================================== */
+
+.header-default {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+    height: 48px;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    min-width: 40px;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.header-icon:active {
+    background-color: var(--bg-muted);
+    color: var(--text-primary);
+}
+
+/* v6.4a: Random icon di header */
+.header-random-icon {
+    cursor: pointer;
+    margin-left: var(--space-xs);
+    font-size: var(--text-xl);
+}
+
+/* Header Step */
+.header-step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+    height: 48px;
+}
+
+.step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-color: transparent;
+    flex-shrink: 0;
+}
+
+.step-done {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.step-active {
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+.step-idle {
+    border-color: var(--text-muted);
+    color: var(--text-muted);
+}
+
+.step-line {
+    width: 32px;
+    height: 2px;
+    margin: 0 var(--space-xs);
+    flex-shrink: 0;
+    background-color: var(--border);
+}
+
+.step-line.active-idle {
+    background: linear-gradient(to right, var(--warning), var(--text-muted));
+}
+
+.step-line.done-active {
+    background: linear-gradient(to right, var(--success), var(--warning));
+}
+
+.step-line.done-done {
+    background-color: var(--success);
+}
+
+.step-line.idle-idle {
+    background-color: var(--text-muted);
+}
+
+/* Header Landing */
+.header-landing {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-md);
+    height: 48px;
+}
+
+.header-landing-text {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    padding: var(--space-xs) var(--space-md);
+}
+
+/* ============================================== */
+/* 12. KOMPONEN GLOBAL - FOOTER                    */
+/* ============================================== */
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0 var(--space-md);
+    height: 48px;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-dark);
+}
+
+.footer-frame {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.footer-frame-icon {
+    flex: 0 0 auto;
+    justify-content: center;
+}
+
+.footer-frame-flex {
+    flex: 1 1 0;
+    justify-content: center;
+}
+
+.footer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    width: auto;
+    height: auto;
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.footer-icon:active {
+    background-color: var(--bg-muted-hover);
+    border-color: var(--border-dark);
+    transform: scale(0.96);
+}
+
+.footer-icon:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: var(--border-light);
+}
+
+.footer-icon:disabled:active {
+    background-color: var(--bg-muted);
+    border-color: var(--border-light);
+    transform: none;
+}
+
+.footer-flex-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0 var(--space-md);
+    min-height: 44px;
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.footer-flex-content:active {
+    background-color: var(--bg-muted-hover);
+    border-color: var(--border-dark);
+    transform: scale(0.96);
+}
+
+.footer-flex-content.disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+.footer-flex-icon {
+    font-size: var(--text-lg);
+}
+
+.footer-flex-text {
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.footer-layout-a .footer-frame:first-child { justify-content: flex-start; }
+.footer-layout-a .footer-frame:last-child { justify-content: flex-end; }
+.footer-layout-b .footer-frame:nth-child(1) { justify-content: flex-start; }
+.footer-layout-b .footer-frame:nth-child(2),
+.footer-layout-b .footer-frame:nth-child(3) { justify-content: center; }
+.footer-layout-c .footer-frame:nth-child(1),
+.footer-layout-c .footer-frame:nth-child(2) { justify-content: flex-start; }
+.footer-layout-c .footer-frame:nth-child(3) { justify-content: flex-end; }
+
+/* ============================================== */
+/* 13. TOGGLE SWITCH MANDIRI (KAPSUL)             */
+/* ============================================== */
+
+.toggle {
+    display: inline-flex;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 12px;
+}
+
+.toggle-track {
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background-color: var(--border);
+    border: 1px solid var(--border-dark);
+    transition: background-color var(--transition-fast);
+    position: relative;
+}
+
+.toggle-thumb {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform var(--transition-fast);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.toggle[aria-checked="true"] .toggle-track {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.toggle[aria-checked="true"] .toggle-thumb {
+    transform: translateX(20px);
+}
+
+.switch { display: none; }
+label.switch { display: none; }
+
+/* ============================================== */
+/* 14. MAP CONTROLS & MARKER                      */
+/* ============================================== */
+
+.map-container,
+.tracking-map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background-color: var(--bg-muted);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    z-index: 1;
+}
+
+.tracking-map,
+.leaflet-container {
+    z-index: 1;
+}
+
+.leaflet-control {
+    z-index: 5 !important;
+}
+
+.map-controls {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    z-index: 10;
+}
+
+.map-control-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.map-control-btn:active {
+    background-color: var(--bg-muted);
+}
+
+.map-accuracy {
+    position: absolute;
+    bottom: var(--space-sm);
+    left: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+    z-index: 10;
+}
+
+.map-accuracy-high { color: var(--success); }
+.map-accuracy-medium { color: var(--warning); }
+.map-accuracy-low { color: var(--danger); }
+
+.map-status {
+    position: absolute;
+    top: var(--space-sm);
+    left: var(--space-sm);
+    padding: var(--space-xs) var(--space-sm);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    z-index: 10;
+}
+
+.tracking-status-overlay {
+    position: absolute;
+    top: var(--space-sm);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-card);
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+.tracking-accuracy-display {
+    position: absolute;
+    bottom: var(--space-sm);
+    right: 60px;
+    left: auto;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    z-index: 1000;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+}
+
+.tracking-gps-status {
+    position: absolute;
+    bottom: var(--space-sm);
+    left: var(--space-sm);
+    z-index: 1000;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    font-size: 0.625rem;
+    font-weight: var(--font-semibold);
+    white-space: nowrap;
+}
+
+.tracking-accuracy-display.accuracy-high { color: var(--success); }
+.tracking-accuracy-display.accuracy-medium { color: var(--warning); }
+.tracking-accuracy-display.accuracy-low { color: var(--danger); }
+
+[data-theme="dark"] .tracking-accuracy-display.accuracy-high { color: var(--success-light); }
+[data-theme="dark"] .tracking-accuracy-display.accuracy-medium { color: var(--warning-light); }
+[data-theme="dark"] .tracking-accuracy-display.accuracy-low { color: var(--danger-light); }
+
+.leaflet-control-attribution {
+    margin: 0 !important;
+    padding: 2px 4px !important;
+    font-size: 9px !important;
+    background: var(--bg-card) !important;
+    color: var(--text-muted) !important;
+    border-top-right-radius: var(--radius-sm);
+    opacity: 0.8;
+}
+
+.leaflet-control-attribution:hover { opacity: 1; }
+
+[data-theme="dark"] .leaflet-control-attribution {
+    background: var(--bg-card) !important;
+    color: var(--text-muted) !important;
+}
+
+/* v6.4a: Map placeholder dengan class */
+.map-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-muted);
+    color: var(--text-secondary);
+    text-align: center;
+    padding: var(--space-lg);
+}
+
+.map-placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.map-placeholder-message {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.map-placeholder-submessage {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* v6.4a: Marker user tanpa background */
+.marker-user-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: var(--shadow);
+}
+
+.marker-route-icon {
+    font-size: 28px;
+    line-height: 1;
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.marker-user-driver {
+    /* tanpa background */
+}
+
+.marker-user-passenger {
+    /* tanpa background */
+}
+
+.marker-user-operational {
+    /* tanpa background */
+}
+
+.leaflet-center-control { z-index: 10 !important; }
+
+/* ============================================== */
+/* 15. PENDAPATAN SUB ROW (REPORT)                */
+/* ============================================== */
+
+/* v6.4a: Baris "Kesejahteraan Driver Tapi Aplikasi" menjorok ke dalam */
+.pendapatan-sub-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--space-xs);
+    padding: var(--space-xs) 0;
+    padding-left: var(--space-lg);
+    font-size: var(--text-xs);
+}
+
+.pendapatan-sub-row span:first-child {
+    font-style: italic;
+    color: var(--text-muted);
+    flex: 0 0 auto;
+}
+
+.pendapatan-sub-row span:last-child {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-left: var(--space-xs);
+}
+
+/* ==========================================================================
+   TOMBOL CENTER – Mobile‑friendly (tanpa hover)
+   ========================================================================== */
+
+.map-center-btn,
+.leaflet-container .map-center-btn {
+    /* posisi */
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 1000;
+
+    /* reset tampilan */
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+
+    /* ukuran & ikon */
+    width: 36px;
+    height: 36px;
+    font-size: 28px;
+    line-height: 1;
+    color: inherit;                      /* ikut warna teks sekitar */
+    text-shadow: 0 0 4px rgba(0,0,0,0.5); /* bayangan halus agar terbaca di peta */
+
+    /* flex center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* interaksi */
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+
+    /* animasi sentuhan */
+    transition: transform 0.1s ease;
+}
+
+.map-center-btn:active {
+    transform: scale(0.85);
+}
+
+
+/* ============================================== */
+/* 16. SLIDE ACTION (FOOTER SLIDER)               */
+/* ============================================== */
+
+.slide-action {
+    position: relative;
+    width: 100%;
+    height: 44px;
+    margin: 2px 0;               /* sentralkan dalam footer 48px */
+    background-color: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;          /* cegah scroll saat geser */
+    cursor: default;
+}
+
+.slide-action--disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.slide-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    pointer-events: none;
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.slide-track-icon {
+    font-size: var(--text-lg);   /* ikon dari getIcon */
+    line-height: 1;
+}
+
+.slide-track-label {
+    /* opsional, bisa diberi style tambahan */
+}
+
+.slide-thumb {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: 38px;                 /* total area sentuh 44px (3+38+3) */
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-lg);
+    z-index: 2;
+    box-shadow: var(--shadow-sm);
+    cursor: grab;
+    transition: none;            /* transisi hanya dipasang via JS saat animasi */
+}
+
+.slide-thumb--dragging {
+    cursor: grabbing;
+}
+
+.slide-thumb--primary {
+    background-color: var(--primary);
+}
+.slide-thumb--warning {
+    background-color: var(--warning);
+}
+.slide-thumb--danger {
+    background-color: var(--danger);
+}
+
+/* Dark mode otomatis karena variabel */
+
+/* ============================================== */
+/* 17. LOCATION PICKER (picker.js)                */
+/* ============================================== */
+
+.lp-input-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: border-color var(--transition-fast);
+    min-height: 44px;
+    margin-bottom: var(--space-sm);
+}
+
+.lp-input-box:focus-within {
+    border-color: var(--primary);
+}
+
+.lp-input-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: var(--space-sm);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+}
+
+.lp-input-box input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.lp-saved-btns {
+    display: flex;
+    gap: 4px;
+    margin-bottom: var(--space-sm);
+}
+
+.lp-saved-btn {
+    flex: 1;
+    font-size: var(--text-xs);
+    padding: var(--space-xs);
+    min-height: 32px;
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lp-saved-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.lp-selected-info {
+    margin: var(--space-sm) 0;
+    padding: var(--space-sm);
+    background: var(--bg-muted);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+}
+
+.lp-selected-info .lp-info-label {
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+}
+
+.lp-selected-info .lp-info-coords {
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.lp-selected-info .lp-save-btn {
+    margin-top: var(--space-xs);
+}
+
+.lp-results .lp-result-item {
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    font-size: var(--text-sm);
+}
+
+.lp-result-item:active {
+    background: var(--bg-muted);
+}
+
+.lp-result-map {
+    height: 300px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: var(--space-sm);
+}
+
+.lp-result-stats {
+    background: var(--bg-muted);
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-sm);
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    font-weight: var(--font-medium);
+}
+
+.lp-result-actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.lp-result-actions .btn {
+    flex: 1;
+}
+
+/* ==========================================================================
+   TOMBOL WARNING PETA (v6.7a)
+   ========================================================================== */
+.map-warning-btn {
+    position: absolute;
+    bottom: 60px;          /* di atas tombol center (12px) */
+    right: 12px;
+    z-index: 1000;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+    line-height: 1;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: transform 0.1s ease;
+}
+.map-warning-btn:active {
+    transform: scale(0.85);
+}
+
+/** =============================================================================
+ *
+ * ================================ End Of File ================================
+ */
