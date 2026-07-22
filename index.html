@@ -1,0 +1,313 @@
+<!--
+/**
+ * =================================================================================
+ * FILE         : /index.html
+ * FILE VERSION : 2.0.1-rev4
+ * APP VERSION  : 2.0.1
+ * DATE         : 20 Juli 2026
+ * @author      : gk
+ *
+ * CHANGELOG  :
+ *
+ * =================================================================================
+ */
+-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a1f1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ============================================================
+         SEO DASAR (akan diupdate oleh JS untuk URL dinamis)
+         ============================================================ -->
+    <title>KupasTarif – Kalkulator Tarif Ojek Online</title>
+    <meta name="description" content="Kalkulator tarif ojek online yang transparan. Hitung pendapatan driver, rincian biaya operasional, dan bandingkan tarif. Privasi terjaga, offline-first, dan gratis.">
+    <meta name="keywords" content="kalkulator tarif ojek online, transparansi tarif, driver ojek, pendapatan driver, biaya operasional, potongan aplikasi">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://linktr.ee/kupastarif/">
+
+    <!-- ============================================================
+         OPEN GRAPH (Facebook, WhatsApp, dll.)
+         ============================================================ -->
+    <meta property="og:title" content="KupasTarif – Kalkulator Tarif Ojek Online">
+    <meta property="og:description" content="Hitung pendapatan driver, biaya operasional, dan rincian tarif secara akurat. Gratis, offline-first, dan privasi terjaga.">
+    <meta property="og:url" content="https://linktr.ee/kupastarif/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="/assets/img/og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- ============================================================
+         TWITTER CARD
+         ============================================================ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="KupasTarif – Kalkulator Tarif Ojek Online">
+    <meta name="twitter:description" content="Kalkulator tarif ojek online transparan. Hitung pendapatan driver dan biaya operasional dengan mudah.">
+    <meta name="twitter:image" content="/assets/img/og.jpg">
+
+    <!-- ============================================================
+         STRUCTURED DATA (JSON-LD) – Schema.org WebApplication
+         ============================================================ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "KupasTarif",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript",
+      "description": "Kalkulator tarif ojek online transparan. Menghitung pendapatan driver, biaya operasional, dan rincian tarif berdasarkan data aktual.",
+      "url": "https://linktr.ee/kupastarif/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      }
+    }
+    </script>
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/img/icon192.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- =================================================================
+         KONFIGURASI GLOBAL & CACHE BUST (SINGLE SOURCE OF TRUTH)
+         ================================================================= -->
+    <script>
+        // ---------- SETELAN APLIKASI (UBAH DI SINI SAJA) ----------
+        window.isDevMode = true;            // false untuk production
+        window.APP_VERSION = '2.0.1';
+        window.SITE_TITLE = 'KupasTarif';
+        window.SITE_DISPLAY = 'Kupas⚡Tarif';
+        window.SITE_ICON = '⚡';
+        window.LANDING_LINK = 'linktr.ee/kupastarif';
+        window.DEFAULT_THEME = 'light';
+
+        // ---------- CACHE BUST HANYA SAAT DEV MODE ----------
+        if (window.isDevMode) {
+            var CACHE_BUST = Date.now();
+            window.CACHE_BUST = CACHE_BUST;
+            document.write('<link rel="stylesheet" href="assets/css/main.css?v=' + CACHE_BUST + '">');
+            document.write('<link rel="stylesheet" href="assets/css/components.css?v=' + CACHE_BUST + '">');
+            document.write('<link rel="stylesheet" href="assets/css/pages.css?v=' + CACHE_BUST + '">');
+        } else {
+            document.write('<link rel="stylesheet" href="assets/css/main.css">');
+            document.write('<link rel="stylesheet" href="assets/css/components.css">');
+            document.write('<link rel="stylesheet" href="assets/css/pages.css">');
+        }
+
+        // ---------- BASE URL UNTUK SCRIPT DINAMIS (fallback) ----------
+        (function() {
+            if (!window.APP_FULL_BASE) {
+                var path = window.location.pathname;
+                var base = path.replace(/\/[^/]*$/, '/');
+                window.APP_FULL_BASE = window.location.origin + base;
+            }
+        })();
+    </script>
+
+    <!-- Script untuk update meta canonical, og:url, dan gambar secara dinamis -->
+    <script>
+        (function() {
+            var baseUrl = window.APP_FULL_BASE || window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
+            if (!baseUrl.endsWith('/')) baseUrl += '/';
+
+            var imageUrl = baseUrl + 'assets/img/og.jpg';
+
+            var canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) {
+                canonical.href = baseUrl;
+            } else {
+                var link = document.createElement('link');
+                link.rel = 'canonical';
+                link.href = baseUrl;
+                document.head.appendChild(link);
+            }
+
+            var ogUrl = document.querySelector('meta[property="og:url"]');
+            if (ogUrl) ogUrl.content = baseUrl;
+
+            var ogImage = document.querySelector('meta[property="og:image"]');
+            if (ogImage) ogImage.content = imageUrl;
+
+            var twImage = document.querySelector('meta[name="twitter:image"]');
+            if (twImage) twImage.content = imageUrl;
+        })();
+    </script>
+
+    <!-- Font Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+
+    <!-- CSS tambahan untuk .sr-only (SEO) -->
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ================================================================
+         LOADING SCREEN
+         ================================================================ -->
+    <div id="loading-screen" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #0a1f1a; display: flex; align-items: center; justify-content: center; z-index: 10001; transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; width: 85%; max-width: 300px; padding: 20px 0;">
+
+            <div style="font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: #00a86b; text-align: center;">Kupas⚡Tarif</div>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 6px; height: 48px; padding: 4px 0;">
+                <div class="loading-wave-bar" style="width: 4px; height: 100%; background-color: #00a86b; border-radius: 9999px; animation: loading-wave 1.2s ease-in-out infinite;"></div>
+                <div class="loading-wave-bar" style="width: 4px; height: 100%; background-color: #00a86b; border-radius: 9999px; animation: loading-wave 1.2s ease-in-out 0.15s infinite;"></div>
+                <div class="loading-wave-bar" style="width: 4px; height: 100%; background-color: #00a86b; border-radius: 9999px; animation: loading-wave 1.2s ease-in-out 0.3s infinite;"></div>
+                <div class="loading-wave-bar" style="width: 4px; height: 100%; background-color: #00a86b; border-radius: 9999px; animation: loading-wave 1.2s ease-in-out 0.45s infinite;"></div>
+                <div class="loading-wave-bar" style="width: 4px; height: 100%; background-color: #00a86b; border-radius: 9999px; animation: loading-wave 1.2s ease-in-out 0.6s infinite;"></div>
+            </div>
+
+            <div style="width: 100%; height: 3px; background-color: #1a3a2e; border-radius: 9999px; overflow: hidden;">
+                <div id="loading-progress-bar" style="height: 100%; width: 0%; background-color: #00a86b; border-radius: 9999px; transition: width 0.1s linear;"></div>
+            </div>
+
+            <div id="loading-text" style="font-size: 0.875rem; color: #94a3b8; text-align: center; min-height: 2.5em; line-height: 1.6; padding: 0 8px;"></div>
+
+            <div style="font-size: 0.625rem; color: #64748b; margin-top: -8px;">v2.0.1</div>
+
+            <button id="loading-reload-button" style="padding: 8px 24px; background-color: #00a86b; color: white; border: none; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 150ms; display: none;">⟲ Muat Ulang</button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes loading-wave {
+            0%, 60%, 100% { transform: scaleY(1); }
+            30% { transform: scaleY(2); }
+        }
+    </style>
+
+    <!-- ================================================================
+         APP CONTAINER
+         ================================================================ -->
+    <div id="app" class="app-container hidden">
+        <header id="app-header" class="app-header"></header>
+        <main id="app-content" class="app-content"></main>
+        <footer id="app-footer" class="app-footer"></footer>
+    </div>
+
+    <h1 class="sr-only">KupasTarif – Kalkulator Tarif Ojek Online</h1>
+
+    <noscript>
+        <div style="padding: 20px; font-family: sans-serif; max-width: 600px; margin: 40px auto; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <h1 style="font-size: 1.5rem; color: #0a1f1a;">KupasTarif – Kalkulator Tarif Ojek Online</h1>
+            <p style="color: #334155;">Aplikasi ini memerlukan JavaScript untuk berjalan. Silakan aktifkan JavaScript di browser Anda.</p>
+            <p style="color: #475569;">Fitur: hitung pendapatan driver, rincian biaya operasional, perbandingan tarif, tracking GPS, dan laporan transparan.</p>
+            <p><a href="https://linktr.ee/kupastarif/" style="color: #0d7c4a;">Kembali ke Beranda</a></p>
+        </div>
+    </noscript>
+
+    <!-- ================================================================
+         PORTAL CONTAINERS
+         ================================================================ -->
+    <div id="drawer-container"></div>
+    <div id="popup-container"></div>
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ================================================================
+         LOADING OVERLAY (NAVIGASI GLOBAL)
+         ================================================================ -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ================================================================
+         LOADER SCRIPT (init.js)
+         ================================================================ -->
+    <script>
+        if (window.isDevMode && window.CACHE_BUST) {
+            document.write('<script src="js/core/init.js?v=' + window.CACHE_BUST + '"><\/script>');
+        } else {
+            document.write('<script src="js/core/init.js"><\/script>');
+        }
+    </script>
+
+    <!-- ================================================================
+         INLINE: LOADING TEXT
+         ================================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            var LOADING_TEXTS = [
+                "Demi sistem, driver terus bekerja...",
+                "Atas nama sistem yang selalu benar!",
+                "Menyiapkan mesin yang bijaksana...",
+                "Sekarang keliatan, besok diumpetin sistem.",
+                "Tidak ada yg lebih penting selain ketidaktahuan penumpang!"
+            ];
+
+            var randomIndex = Math.floor(Math.random() * LOADING_TEXTS.length);
+            var loadingTextElement = document.getElementById('loading-text');
+            if (loadingTextElement) {
+                loadingTextElement.textContent = LOADING_TEXTS[randomIndex];
+            }
+
+            var reloadButton = document.getElementById('loading-reload-button');
+            if (reloadButton) {
+                reloadButton.addEventListener('click', function() {
+                    window.location.reload(true);
+                });
+            }
+        })();
+    </script>
+
+    <!-- ================================================================
+         SERVICE WORKER REGISTRATION (nonaktif di Android)
+         ================================================================ -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            if (window.isDevMode) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(function(registration) {
+                        registration.unregister();
+                        console.log('[DEV] Service Worker unregistered');
+                    });
+                });
+                if ('caches' in window) {
+                    caches.keys().then(function(cacheNames) {
+                        cacheNames.forEach(function(cacheName) {
+                            caches.delete(cacheName);
+                            console.log('[DEV] Cache deleted:', cacheName);
+                        });
+                    });
+                }
+            } else {
+                if (!window.Capacitor || !window.Capacitor.isNative) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+                            console.log('Service Worker registered with scope:', reg.scope);
+                        }).catch(function(err) {
+                            console.error('Service Worker registration failed:', err);
+                        });
+                    });
+                } else {
+                    console.log('[SW] Service Worker dinonaktifkan di Android');
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
+<!--
+// ================================ End Of File ================================
+-->
