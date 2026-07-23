@@ -401,7 +401,7 @@ function updateVersionFooter() {
 
     const isNative = window.__platform?.isNative || false;
     const version = window.APP_VERSION || '2.0.1';
-    const releaseUrl = 'https://github.com/kupastarif/calc/releases';
+    const releaseUrl = 'https://github.com/kupastarif/apk/releases';
 
     if (isNative) {
         // ANDROID: tampilkan status update dari StateManager
