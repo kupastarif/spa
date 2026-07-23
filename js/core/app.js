@@ -298,7 +298,7 @@ window.checkForUpdate = async function(manual = false) {
     try {
         const currentVersion = window.APP_VERSION || '2.0.1-beta';
         // Ganti dengan username/repo Anda
-        const repo = 'kupastarif/calc'; // <-- SESUAIKAN DENGAN REPO ANDA
+        const repo = 'kupastarif/apk'; // <-- SESUAIKAN DENGAN REPO ANDA
         const url = `https://api.github.com/repos/${repo}/releases/latest`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('Gagal mengambil data (HTTP ' + res.status + ')');
