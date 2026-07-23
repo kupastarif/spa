@@ -1,7 +1,7 @@
 /**
  * =================================================================================
  * FILE         : /js/maps/gps.js
- * FILE VERSION : 2.0.1-rev5
+ * FILE VERSION : 2.0.1-rev6
  * APP VERSION  : 2.0.1
  * DATE         : 22 Juli 2026
  * @author      : gk
@@ -14,7 +14,7 @@
 'use strict';
 
 // ==================== VERSI FILE ====================
-const F_V = '2.0.1-rev5';
+const F_V = '2.0.1-rev6';
 
 import { StateEvents } from '../core/state.js';
 
@@ -455,20 +455,21 @@ async function _stopNative() {
     if (_nativeWatcherId !== null) {
         const BackgroundGeolocation = window.Capacitor?.Plugins?.BackgroundGeolocation;
         if (BackgroundGeolocation) {
+            // 1. Hentikan service background (ini akan menghilangkan notifikasi)
             try {
-                // 1. Hapus watcher
-                await BackgroundGeolocation.removeWatcher(_nativeWatcherId);
-                window.log.info('[GPS ' + F_V + '] (14) Native watcher dihapus');
+                await BackgroundGeolocation.stop();
+                window.log.info('[GPS ' + F_V + '] (15) Native background service dihentikan');
+            } catch (stopErr) {
+                window.log.warn('[GPS ' + F_V + '] (16) Gagal stop native service:', stopErr);
+            }
 
-                // 2. Hentikan service background secara eksplisit
-                try {
-                    await BackgroundGeolocation.stop();
-                    window.log.info('[GPS ' + F_V + '] (15) Native background service dihentikan');
-                } catch (stopErr) {
-                    window.log.warn('[GPS ' + F_V + '] (16) Gagal stop native service:', stopErr);
-                }
-            } catch (err) {
-                window.log.warn('[GPS ' + F_V + '] (17) Gagal hapus native watcher:', err);
+            // 2. Hapus watcher (jika masih ada)
+            try {
+                // Perhatikan: removeWatcher menerima objek { id: ... } pada versi terbaru
+                await BackgroundGeolocation.removeWatcher({ id: _nativeWatcherId });
+                window.log.info('[GPS ' + F_V + '] (14) Native watcher dihapus');
+            } catch (removeErr) {
+                window.log.warn('[GPS ' + F_V + '] (17) Gagal hapus native watcher:', removeErr);
             }
         } else {
             window.log.warn('[GPS ' + F_V + '] (18) BackgroundGeolocation plugin tidak tersedia saat stop');
@@ -476,7 +477,6 @@ async function _stopNative() {
         _nativeWatcherId = null;
     }
     _isNativeStarted = false;
-    // Notifikasi otomatis hilang setelah service stop
     window.log.info('[GPS ' + F_V + '] (19) Native tracking dihentikan total');
 }
 
